@@ -142,15 +142,38 @@ $(window).on('load', function () {
 const forms = document.querySelectorAll('.contact-form');
 const thankYouMessage = document.getElementById('thankYouMessage');
 const body = document.body;
+let thankYouTimer = null;
+
+function closeThankYouModal() {
+    if (!thankYouMessage) {
+        return;
+    }
+
+    if (thankYouTimer) {
+        clearTimeout(thankYouTimer);
+        thankYouTimer = null;
+    }
+
+    thankYouMessage.classList.remove('active');
+    thankYouMessage.classList.remove('sm-open');
+    body.classList.remove('sm-hidde');
+    $('.sm-quest-modal').removeClass('sm-open');
+    $('body').removeClass('lock');
+}
 
 function openThankYouModal() {
     if (!thankYouMessage) {
         return;
     }
 
+    if (thankYouTimer) {
+        clearTimeout(thankYouTimer);
+    }
+
     thankYouMessage.classList.add('active');
     thankYouMessage.classList.add('sm-open');
     body.classList.add('sm-hidde');
+    thankYouTimer = setTimeout(closeThankYouModal, 1500);
 }
 
 window.thankYou = openThankYouModal;
@@ -336,11 +359,5 @@ $(document).on('click', '[data-sm-anketa-send]', function (event) {
 // Close the thank-you modal
 const closeModalButton = document.getElementById('sm-modal-close');
 if (closeModalButton && thankYouMessage) {
-    closeModalButton.addEventListener('click', function() {
-        thankYouMessage.classList.remove('active');
-        thankYouMessage.classList.remove('sm-open'); // Remove sm-open
-        body.classList.remove('sm-hidde'); // Remove sm-hidde from body
-        $('.sm-quest-modal').removeClass('sm-open');
-        $('body').removeClass('lock');
-    });
+    closeModalButton.addEventListener('click', closeThankYouModal);
 }
