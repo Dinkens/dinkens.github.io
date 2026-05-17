@@ -13,7 +13,7 @@ window.siteConfig = {
   dates: {
     coverDate: "2026-06-20",
     eventDate: "2026-06-20",
-    responseDeadline: "2025-05-15"
+    responseDeadline: "2026-06-15"
   },
   event: {
     time: "14:00"
